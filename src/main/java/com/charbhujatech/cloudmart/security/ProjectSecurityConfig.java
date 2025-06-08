@@ -40,8 +40,8 @@ public class ProjectSecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/api/v1/products").hasAnyAuthority(Roles.ADMIN.toString(),Roles.VENDOR.toString())
                         .requestMatchers(HttpMethod.GET,"/api/v1/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/v1/products").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/v1/images").hasAnyAuthority(Roles.ADMIN.toString(),Roles.VENDOR.toString())
-                        .requestMatchers(HttpMethod.GET,"/api/v1/images/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/products/{productId}/images").hasAnyAuthority(Roles.ADMIN.toString(),Roles.VENDOR.toString())
+                        .requestMatchers(HttpMethod.GET,"/api/v1/products/{productId}/images").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/images/**").hasAnyAuthority(Roles.ADMIN.toString(),Roles.VENDOR.toString())
                         .requestMatchers(HttpMethod.POST,"/api/v1/cards/{cardId}/products/{productId}").hasAnyAuthority(Roles.CUSTOMER.toString())
                         .requestMatchers(HttpMethod.DELETE,"/api/v1/cards/{cardId}/products/{productId}").hasAnyAuthority(Roles.CUSTOMER.toString())
@@ -63,6 +63,8 @@ public class ProjectSecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/api/v1/products/{productId}/reviews").hasAnyAuthority(Roles.ADMIN.toString(),Roles.CUSTOMER.toString(),Roles.VENDOR.toString(),Roles.DELIVERY_PARTNER.toString())
                         .requestMatchers(HttpMethod.POST,"/api/v1/users/{userId}/orders/{orderId}/products/{productId}/reviews").hasAnyAuthority(Roles.CUSTOMER.toString())
                         .requestMatchers(HttpMethod.POST,"/api/v1/users/{userId}/orders/{orderId}/payments").hasAnyAuthority(Roles.CUSTOMER.toString())
+                        .requestMatchers(HttpMethod.GET,"/api/v1/users/{userId}/orders/{orderId}/payments/**").hasAnyAuthority(Roles.CUSTOMER.toString())
+                        .requestMatchers(HttpMethod.GET,"/api/v1/users/{userId}/payments").hasAnyAuthority(Roles.CUSTOMER.toString())
                         .anyRequest().denyAll()
         ).csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

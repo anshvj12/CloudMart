@@ -2,6 +2,7 @@ package com.charbhujatech.cloudmart.service;
 
 import com.charbhujatech.cloudmart.Model.Images;
 import com.charbhujatech.cloudmart.Model.Product;
+import com.charbhujatech.cloudmart.config.AwsS3CRUDOperation;
 import com.charbhujatech.cloudmart.dao.ProductRepository;
 import com.charbhujatech.cloudmart.dto.ProductRequestDTO;
 import com.charbhujatech.cloudmart.dto.ProductsResponseDTO;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +29,10 @@ import java.util.Set;
 public class ProductServiceImp implements ProductService {
 
     private final ProductRepository productRepository;
+
+    private final ImagesServiceImp imagesServiceImp;
+
+    private final AwsS3CRUDOperation awsS3CRUDOperation;
 
 
     @Override
@@ -63,12 +69,12 @@ public class ProductServiceImp implements ProductService {
                 for( Images image: productImage)
                 {
                     ImageResponseDTO imageResponseDTO = new ImageResponseDTO();
-                    imageResponseDTO.setProductId(getProduct.getProductId());
                     if (image.getImageId() != null)
                         imageResponseDTO.setImageId(image.getImageId());
                     if(image.getImageUrl() != null && !image.getImageUrl().isEmpty())
                     {
-                        imageResponseDTO.setImageUrl(image.getImageUrl());
+                        final URL url = awsS3CRUDOperation.generatePresignedUrl(image.getImageUrl());
+                        imageResponseDTO.setImageUrl(url);
                     }
                     imageResponseDTOList.add(imageResponseDTO);
                 }

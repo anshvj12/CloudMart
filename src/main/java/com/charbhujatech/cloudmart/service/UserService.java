@@ -2,6 +2,7 @@ package com.charbhujatech.cloudmart.service;
 
 import com.charbhujatech.cloudmart.Model.User;
 import com.charbhujatech.cloudmart.dto.UserRequestDTO;
+import com.charbhujatech.cloudmart.dto.UserResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,11 @@ public interface UserService {
 
     User saveUser(UserRequestDTO user);
 
-    List<UserRequestDTO> findAllUsers();
+    List<UserResponseDTO> findAllUsers();
 
-    Optional<UserRequestDTO> findUserByEmail(String email);
+    Optional<UserResponseDTO> findUserByEmail(String email);
 
-    UserRequestDTO updateUser(String email, UserRequestDTO userRequestDTO);
+    UserResponseDTO updateUser(String email, UserRequestDTO userRequestDTO);
 
     Boolean deleteUser(String email);
 }

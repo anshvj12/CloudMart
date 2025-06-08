@@ -4,6 +4,7 @@ package com.charbhujatech.cloudmart.controller;
 import com.charbhujatech.cloudmart.Model.User;
 import com.charbhujatech.cloudmart.dto.ResponseDTO;
 import com.charbhujatech.cloudmart.dto.UserRequestDTO;
+import com.charbhujatech.cloudmart.dto.UserResponseDTO;
 import com.charbhujatech.cloudmart.exception.EntityNotCreated;
 import com.charbhujatech.cloudmart.exception.ResourceNotFoundException;
 import com.charbhujatech.cloudmart.service.UserService;
@@ -31,9 +32,9 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/users/{email}")
-    public ResponseEntity<UserRequestDTO> getUser(@PathVariable
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable
                                             @Email(message = "Enter a valid email") @NotEmpty String email) {
-            UserRequestDTO userByEmail = userService.findUserByEmail(email).orElseThrow(
+        UserResponseDTO userByEmail = userService.findUserByEmail(email).orElseThrow(
                     () ->{ throw new ResourceNotFoundException(ConstantsString.USER_NOT_FOUND+email);}
             );
             return new ResponseEntity<>(userByEmail,HttpStatus.OK);
@@ -57,16 +58,16 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<UserRequestDTO> getUsers() {
-        List<UserRequestDTO> users = userService.findAllUsers();
+    public List<UserResponseDTO> getUsers() {
+        List<UserResponseDTO> users = userService.findAllUsers();
         return users;
     }
 
     @PutMapping("/users/{email}")
-    public ResponseEntity<UserRequestDTO> updateUser(@PathVariable String email, @RequestBody UserRequestDTO userRequestDTO)
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable String email, @RequestBody UserRequestDTO userRequestDTO)
     {
-        UserRequestDTO userRequestDTOR = userService.updateUser(email, userRequestDTO);
-        return new ResponseEntity<>(userRequestDTOR,HttpStatus.OK);
+        UserResponseDTO userResponseDTO = userService.updateUser(email, userRequestDTO);
+        return new ResponseEntity<>(userResponseDTO,HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{email}")

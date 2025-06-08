@@ -19,7 +19,7 @@ public class OrderMapper {
         {
             orderResponseDTO.setOrderStatus(order.getOrderStatus());
         }
-
+        orderResponseDTO.setOrderId(order.getOrderId());
         if (order.getTotalPrice() > 0)
         {
             orderResponseDTO.setTotalPrice(order.getTotalPrice());

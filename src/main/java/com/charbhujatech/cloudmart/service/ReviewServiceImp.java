@@ -1,7 +1,6 @@
 package com.charbhujatech.cloudmart.service;
 
 import com.charbhujatech.cloudmart.Model.*;
-import com.online.shopping.Model.*;
 import com.charbhujatech.cloudmart.dao.OrderRepository;
 import com.charbhujatech.cloudmart.dao.ProductRepository;
 import com.charbhujatech.cloudmart.dao.ReviewRepository;

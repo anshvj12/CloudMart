@@ -7,8 +7,10 @@ import lombok.Setter;
 @Setter
 public class ReviewResponseDTO {
 
-    protected String reviewText;
+    private Long reviewId;
 
-    protected int rating;
+    private String reviewText;
+
+    private int rating;
 
 }

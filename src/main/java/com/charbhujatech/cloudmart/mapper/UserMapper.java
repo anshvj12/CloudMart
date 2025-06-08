@@ -2,24 +2,25 @@ package com.charbhujatech.cloudmart.mapper;
 
 import com.charbhujatech.cloudmart.Model.User;
 import com.charbhujatech.cloudmart.dto.UserRequestDTO;
+import com.charbhujatech.cloudmart.dto.UserResponseDTO;
 import com.charbhujatech.cloudmart.enums.Roles;
 
 public class UserMapper {
 
-    public static UserRequestDTO mapToUserDTO(User user, UserRequestDTO userRequestDTO)
+    public static void mapToUserDTO(User user, UserResponseDTO userResponseDTO)
     {
-        userRequestDTO.setFirstName(user.getFirstName());
+        userResponseDTO.setFirstName(user.getFirstName());
+        userResponseDTO.setUserId(user.getUserId());
 
         if(user.getLastName() != null)
-            userRequestDTO.setLastName(user.getLastName());
+            userResponseDTO.setLastName(user.getLastName());
 
-        userRequestDTO.setEmail(user.getEmail());
-        userRequestDTO.setPhone(user.getPhone());
-        userRequestDTO.setRole(user.getRoles().toString());
-        return userRequestDTO;
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setPhone(user.getPhone());
+        userResponseDTO.setRole(user.getRoles().toString());
     }
 
-    public static User maptoUser(UserRequestDTO userRequestDTO, User user)
+    public static void maptoUser(UserRequestDTO userRequestDTO, User user)
     {
         user.setFirstName(userRequestDTO.getFirstName());
 
@@ -38,7 +39,6 @@ public class UserMapper {
                 break;
             }
         }
-        return user;
     }
 
 }

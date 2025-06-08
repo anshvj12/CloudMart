@@ -1,6 +1,8 @@
 package com.charbhujatech.cloudmart.controller;
 
 import com.charbhujatech.cloudmart.dto.PaymentRequestDTO;
+import com.charbhujatech.cloudmart.dto.PaymentResponseDTO;
+import com.charbhujatech.cloudmart.dto.PaymentResponseDTOS;
 import com.charbhujatech.cloudmart.dto.ResponseDTO;
 import com.charbhujatech.cloudmart.service.PaymentService;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,25 @@ public class PaymentController {
     {
         ResponseDTO responseDTO = paymentService.orderPayment(userId,orderId,paymentRequestDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("users/{userId}/orders/{orderId}/payments/{paymentId}")
+    public ResponseEntity<PaymentResponseDTO> getOrderPayment( @PathVariable Long userId,
+                                                               @PathVariable Long orderId,
+                                                               @PathVariable Long paymentId)
+    {
+        PaymentResponseDTO paymentResponseDTO = paymentService.getOrderPayment(userId,orderId,paymentId);
+        return new ResponseEntity<>(paymentResponseDTO,HttpStatus.OK);
+    }
+
+    @GetMapping("users/{userId}/payments")
+    public ResponseEntity<PaymentResponseDTOS> getUserPayment(@PathVariable Long userId,
+                                                              @RequestParam(defaultValue = "0") int page,
+                                                              @RequestParam(defaultValue = "paymentDate") String sortBy,
+                                                              @RequestParam(defaultValue = "false") boolean ascending)
+    {
+        PaymentResponseDTOS paymentResponseDTO = paymentService.getUserPayment(userId,page,sortBy,ascending);
+        return new ResponseEntity<>(paymentResponseDTO,HttpStatus.OK);
     }
 
 }

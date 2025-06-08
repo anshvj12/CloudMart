@@ -17,6 +17,7 @@ public class ReviewMapper {
             reviewResponseDTO.setReviewText(saveReview.getReviewText());
         if (saveReview.getRating() > 0)
             reviewResponseDTO.setRating(saveReview.getRating());
+        reviewResponseDTO.setReviewId(saveReview.getReviewId());
     }
 
     public static void mapToReview(ReviewRequestDTO review, Review reviewToAdd, Product getProduct, User getUser, Order getOrder) {

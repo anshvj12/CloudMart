@@ -11,8 +11,9 @@ import java.util.Set;
 
 public class CardMapper {
 
-    public static void mapToCard(CardResponseDTO cardResponseDTO, Card savedCard) {
+    public static void mapToCardResponseDTO(CardResponseDTO cardResponseDTO, Card savedCard) {
         cardResponseDTO.setExpectedDeliveryDate(savedCard.getExpectedDeliveryDate());
+        cardResponseDTO.setCardId(savedCard.getCardId());
         List<CardProductResponse> cardProductResponses = new ArrayList<>();
         final Set<CardProduct> products = savedCard.getCardProducts();
         if (products != null) {

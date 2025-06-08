@@ -130,7 +130,7 @@ public class CardServiceImp implements CardService {
         );
         CardResponseDTO cardResponseDTO = new CardResponseDTO();
         if (savedCard != null) {
-            CardMapper.mapToCard(cardResponseDTO, savedCard);
+            CardMapper.mapToCardResponseDTO(cardResponseDTO, savedCard);
         }
         return cardResponseDTO;
     }

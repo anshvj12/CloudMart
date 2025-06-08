@@ -11,6 +11,7 @@ public final class ConstantsString {
 
     public static final String EXIST_EMAIL = "Enter email already exist ";
     public static final String EXIST_PHONENUMBER = "Enter phone number already exist ";
+    public static final String EMAIL_NOT_FOUND_PLEASE_REGISTER_THIS_EMAIL = "Email not found. Please register this email ";
 
     public static final String JWT_HEADER_NAME = "Authorization";
     public static final String JWT_BEARER = "Bearer ";
@@ -67,5 +68,7 @@ public final class ConstantsString {
     public static final String PAYMENT_NOT_FOUND = "Payment details is not found";
 
     public static final String REVIEW_ADDED = "Review added on the product";
+    public static final String IMAGE_UPLOADED = "Image uploaded on server";
+    public static final String IMAGE_ALREADY_EXIST = "Image already is on server";
 }
 

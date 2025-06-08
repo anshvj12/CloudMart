@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,22 +21,24 @@ public class ImageController {
 
     private final ImagesService imagesService;
 
-    @GetMapping("/images/{productId}")
-    public ResponseEntity<List<ImageResponseDTO>> getImages(@PathVariable Long productId) {
-        final List<ImageResponseDTO> images = imagesService.getImages(productId);
-        return new ResponseEntity<>(images,HttpStatus.OK);
-    }
-
-    @PostMapping("/images")
-    public ResponseEntity<ImageResponseDTO> addImage(@RequestBody ImageRequestDTO imageRequestDTO)
+    @PostMapping("products/{productId}/images")
+    public ResponseEntity<ResponseDTO> addImageInS3(@PathVariable Long productId,
+                                                         @RequestParam("image") MultipartFile productImage)
+            throws IOException
     {
-        ImageResponseDTO imageResponseDTO = imagesService.addImage(imageRequestDTO);
+        ResponseDTO imageResponseDTO = imagesService.addProductImage(productId,productImage);
         if (imageResponseDTO != null) {
             return new ResponseEntity<>(imageResponseDTO, HttpStatus.CREATED);
         }
         else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("products/{productId}/images")
+    public ResponseEntity<List<ImageResponseDTO>> getImages(@PathVariable Long productId) {
+        final List<ImageResponseDTO> images = imagesService.getImages(productId);
+        return new ResponseEntity<>(images,HttpStatus.OK);
     }
 
     @DeleteMapping("/images/{imageId}")

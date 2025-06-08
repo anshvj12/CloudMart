@@ -10,6 +10,8 @@ import java.util.List;
 @Setter
 public class CardResponseDTO {
 
+    private Long cardId;
+
     protected double totalPrice;
 
     protected Date expectedDeliveryDate;

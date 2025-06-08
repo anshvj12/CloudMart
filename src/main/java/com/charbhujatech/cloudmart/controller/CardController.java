@@ -32,7 +32,7 @@ public class CardController {
     @GetMapping("/cards/{cardId}")
     public ResponseEntity<CardResponseDTO> getCard (@PathVariable Long cardId)
     {
-        CardResponseDTO responseDTO = cardService.getCart(cardId);
+        final CardResponseDTO responseDTO = cardService.getCart(cardId);
         return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
 }

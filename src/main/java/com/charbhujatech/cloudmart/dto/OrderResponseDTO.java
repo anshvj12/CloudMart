@@ -12,11 +12,11 @@ import java.util.List;
 @Setter
 public class OrderResponseDTO {
 
+    private Long orderId;
+
     protected double totalPrice;
 
     protected Date deliveryDate;
-
-    protected User user;
 
     protected List<CardProductResponse> orderProducts;
 

@@ -5,6 +5,7 @@ import com.charbhujatech.cloudmart.Model.User;
 import com.charbhujatech.cloudmart.dao.CardRepository;
 import com.charbhujatech.cloudmart.dao.UserRepository;
 import com.charbhujatech.cloudmart.dto.UserRequestDTO;
+import com.charbhujatech.cloudmart.dto.UserResponseDTO;
 import com.charbhujatech.cloudmart.exception.BadRequestException;
 import com.charbhujatech.cloudmart.exception.ResourceNotFoundException;
 import com.charbhujatech.cloudmart.mapper.UserMapper;
@@ -51,7 +52,8 @@ public class UserServiceImp implements UserService {
          userRepository.findByPhone(userRequestDTO.getPhone()).
                 ifPresent((User userByPhone) -> { throw new BadRequestException(ConstantsString.EXIST_PHONENUMBER+ userRequestDTO.getPhone());});
 
-        User user = UserMapper.maptoUser(userRequestDTO,new User());
+        User user = new User();
+        UserMapper.maptoUser(userRequestDTO,user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Card card = new Card();
         card.setUser(user);
@@ -60,30 +62,30 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<UserRequestDTO> findAllUsers() {
+    public List<UserResponseDTO> findAllUsers() {
         final List<User> allUser = userRepository.findAll();
 
-        List<UserRequestDTO> userRequestDTOS = new ArrayList<>();
+        List<UserResponseDTO> userResponseDTOS = new ArrayList<>();
 
         for(User user : allUser)
         {
-            UserRequestDTO userRequestDTO = new UserRequestDTO();
+            UserResponseDTO userRequestDTO = new UserResponseDTO();
             UserMapper.mapToUserDTO(user,userRequestDTO);
-            userRequestDTOS.add(userRequestDTO);
+            userResponseDTOS.add(userRequestDTO);
         }
-        return userRequestDTOS;
+        return userResponseDTOS;
     }
 
     @Override
-    public Optional<UserRequestDTO> findUserByEmail(String email) {
+    public Optional<UserResponseDTO> findUserByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException(ConstantsString.USER_NOT_FOUND+email));
-        UserRequestDTO userRequestDTO = new UserRequestDTO();
-        UserMapper.mapToUserDTO(user, userRequestDTO);
-        return Optional.of(userRequestDTO);
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        UserMapper.mapToUserDTO(user, userResponseDTO);
+        return Optional.of(userResponseDTO);
     }
 
     @Override
-    public UserRequestDTO updateUser(String email, UserRequestDTO userRequestDTO) {
+    public UserResponseDTO updateUser(String email, UserRequestDTO userRequestDTO) {
         User userByEmail = userRepository.findByEmail(email).orElseThrow(() -> new BadRequestException(ConstantsString.EXIST_EMAIL+email));
 
         if(userRequestDTO.getFirstName() != null)
@@ -103,9 +105,9 @@ public class UserServiceImp implements UserService {
             userByEmail.setRoles(Roles.valueOf(userRequestDTO.getRole()));
         }
         User saved = userRepository.save(userByEmail);
-        UserRequestDTO returnUserRequestDTO = new UserRequestDTO();
-        UserMapper.mapToUserDTO(saved, returnUserRequestDTO);
-        return returnUserRequestDTO;
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        UserMapper.mapToUserDTO(saved, userResponseDTO);
+        return userResponseDTO;
     }
 
     @Override

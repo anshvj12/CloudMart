@@ -2,8 +2,6 @@ package com.charbhujatech.cloudmart.service;
 
 import com.charbhujatech.cloudmart.Model.*;
 import com.charbhujatech.cloudmart.dao.*;
-import com.online.shopping.Model.*;
-import com.online.shopping.dao.*;
 import com.charbhujatech.cloudmart.dto.OrdersResponseDTO;
 import com.charbhujatech.cloudmart.dto.ResponseDTO;
 import com.charbhujatech.cloudmart.exception.BadRequestException;
@@ -226,6 +224,8 @@ public class OrderServiceImp implements OrderService {
     public ResponseDTO deliverredOrder(Long userId, Long orderId) {
 
         Order order = findOrder(orderId);
+
+        order.setDeliveryDate(new Date());
 
         return updateOrderStatus(order,OrderStatus.OUT_FOR_DELIVERY,OrderStatus.DELIVERED, ConstantsString.ORDER_DELIVERED, ConstantsString.ORDER_NOT_IN_OUT_FOR_DELIVERY_STATUS);
 
